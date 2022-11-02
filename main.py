@@ -275,12 +275,48 @@ class map_class():
 			player.y += 1
 			player.camera_y = player.y - height//6			
 
+
+		border_2 = pg.draw.rect(window,(255,0,255),(196 - player.camera_x ,210 - player.camera_y,2,50),2)
+		border_3 = pg.draw.rect(window,(255,0,255),(0 - player.camera_x ,260 - player.camera_y,196,2),2)
+		border_4 = pg.draw.rect(window,(255,0,255),(0 - player.camera_x ,210 - player.camera_y,196,2),2)
+
+		if player.hitbox.colliderect(border_2):
+			if player.hitbox.left < border_2.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+		if player.hitbox.colliderect(border_3):
+			if player.hitbox.top < border_3.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6
+
+		if player.hitbox.colliderect(border_4):
+			if player.hitbox.bottom > border_4.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6
+
+
+		border_5 = pg.draw.rect(window,(255,0,255),(65 - player.camera_x ,210 - player.camera_y,2,140),2)
+		border_6 = pg.draw.rect(window,(255,0,255),(0 - player.camera_x ,210 - player.camera_y,67,150),2)
+		
+		if player.hitbox.colliderect(border_5):
+			if player.hitbox.left < border_5.right:
+				player.x += 1
+				player.camera_x = player.x - width//7	
+
+		if player.hitbox.colliderect(border_6):
+			if player.hitbox.top < border_6.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6
+
+
+
 map = map_class()
 
 # MAINLOOP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 while loop == True:
-	
+
 	window.fill((30,30,30))
 	#window.blit(bg_t,(0 - player.camera_x , 0 - player.camera_y))
 	if disable_movement == False:

@@ -32,8 +32,8 @@ def event_handler():
 # PLAYER CLASS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class player_class():
 	def __init__(self):
-		self.x = 100
-		self.y = 300
+		self.x = 400
+		self.y = 400
 		self.speed = 1
 
 		self.right = False
@@ -254,7 +254,7 @@ class map_class():
 
 	# BORDERS
 
-	def border(self):
+	def city_border(self):
 		# MAP MAIN BORDER
 
 		border_1 = pg.draw.rect(window,(255,0,255),(0 - player.camera_x ,0 - player.camera_y,500,500),2)
@@ -310,6 +310,80 @@ class map_class():
 				player.camera_y = player.y - height//6
 
 
+		border_7 = pg.draw.rect(window,(255,0,255),(158 - player.camera_x ,0 - player.camera_y,2,43),2)
+		border_8 = pg.draw.rect(window,(255,0,255),(0 - player.camera_x ,0 - player.camera_y,160,43),2)
+
+		if player.hitbox.colliderect(border_7):
+			if player.hitbox.left < border_7.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+		if player.hitbox.colliderect(border_8):
+			if player.hitbox.top < border_7.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6
+
+		border_9 = pg.draw.rect(window,(255,0,255),(160 - player.camera_x ,0 - player.camera_y,26,20),2)
+
+		if player.hitbox.colliderect(border_9):
+			if player.hitbox.right > border_9.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.top > border_9.top:
+				player.y += 1
+				player.camera_y = player.y - height//6
+
+		border_10 = pg.draw.rect(window,(255,0,255),(282 - player.camera_x ,0 - player.camera_y,218,43),2)
+
+		if player.hitbox.colliderect(border_10):
+			if player.hitbox.right > border_10.left:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.top < border_10.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6	
+
+		border_11 = pg.draw.rect(window,(255,0,255),(288 - player.camera_x ,400 - player.camera_y,125,100),2)
+		border_12 = pg.draw.rect(window,(255,0,255),(282 - player.camera_x ,400 - player.camera_y,2,100),2)
+
+		if player.hitbox.colliderect(border_11):
+			if player.hitbox.left < border_11.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_11.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6	
+
+		if player.hitbox.colliderect(border_12):
+			if player.hitbox.right < border_11.left:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+
+
+		border_13 = pg.draw.rect(window,(255,0,255),(451 - player.camera_x ,370 - player.camera_y,49,60),2)
+
+		if player.hitbox.colliderect(border_13):
+			if player.hitbox.right < border_13.right:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+			
+			if player.hitbox.top < border_13.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6	
+		
+		border_14 = pg.draw.rect(window,(255,0,255),(420 - player.camera_x ,480 - player.camera_y,45,20),2)
+
+		if player.hitbox.colliderect(border_14):
+			if player.hitbox.bottom > border_14.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6
+
+			if player.hitbox.left < border_14.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
 
 map = map_class()
 
@@ -326,7 +400,7 @@ while loop == True:
 	player_function()
 	map.map_layer_1()
 	player.player_mech()
-	map.border()
+	map.city_border()
 
 	event_handler()
 	pg.display.flip()

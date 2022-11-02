@@ -32,7 +32,7 @@ def event_handler():
 # PLAYER CLASS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class player_class():
 	def __init__(self):
-		self.x = 400
+		self.x = 70
 		self.y = 400
 		self.speed = 1
 
@@ -377,13 +377,110 @@ class map_class():
 		border_14 = pg.draw.rect(window,(255,0,255),(420 - player.camera_x ,480 - player.camera_y,45,20),2)
 
 		if player.hitbox.colliderect(border_14):
-			if player.hitbox.bottom > border_14.top:
-				player.y -= 1
-				player.camera_y = player.y - height//6
 
 			if player.hitbox.left < border_14.right:
 				player.x += 1
 				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_14.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6
+
+		border_15 = pg.draw.rect(window,(255,0,255),(199 - player.camera_x ,357 - player.camera_y,1,143),2)
+		border_16 = pg.draw.rect(window,(255,0,255),(195 - player.camera_x ,357 - player.camera_y,1,143),2)
+
+		if player.hitbox.colliderect(border_15):
+			if player.hitbox.left < border_15.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_15.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6	
+
+		if player.hitbox.colliderect(border_16):
+			if player.hitbox.right > border_16.left:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+
+		border_17 = pg.draw.rect(window,(255,0,255),(16 - player.camera_x ,413 - player.camera_y,5,5),2)
+		border_18 = pg.draw.rect(window,(255,0,255),(13 - player.camera_x ,415 - player.camera_y,5,5),2)
+
+		if player.hitbox.colliderect(border_17):
+			if player.hitbox.left < border_17.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_17.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6	
+
+		if player.hitbox.colliderect(border_18):
+			if player.hitbox.top < border_18.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6	
+
+		border_19 = pg.draw.rect(window,(255,0,255),(73 - player.camera_x ,478 - player.camera_y,5,5),2)
+		border_20 = pg.draw.rect(window,(255,0,255),(70 - player.camera_x ,480 - player.camera_y,5,5),2)
+
+
+		if player.hitbox.colliderect(border_19):
+			if player.hitbox.left < border_19.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_19.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6	
+
+		if player.hitbox.colliderect(border_20):
+
+			if player.hitbox.right > border_20.left:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+
+		border_21 = pg.draw.rect(window,(255,0,255),(164 - player.camera_x ,480 - player.camera_y,5,5),2)
+		border_22 = pg.draw.rect(window,(255,0,255),(161 - player.camera_x ,482 - player.camera_y,5,5),2)
+
+
+		if player.hitbox.colliderect(border_21):
+			if player.hitbox.left < border_21.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_19.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6	
+
+		if player.hitbox.colliderect(border_22):
+
+			if player.hitbox.right > border_22.left:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+
+		border_23 = pg.draw.rect(window,(255,0,255),(38 - player.camera_x ,385 - player.camera_y,5,43),2)
+		border_24 = pg.draw.rect(window,(255,0,255),(45 - player.camera_x ,387 - player.camera_y,5,45),2)
+		
+		if player.hitbox.colliderect(border_23):
+			if player.hitbox.right > border_23.left:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_23.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6	
+
+
+		if player.hitbox.colliderect(border_24):
+
+			if player.hitbox.left < border_24.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.top < border_24.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6	
+
 
 map = map_class()
 

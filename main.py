@@ -34,6 +34,13 @@ def event_handler():
 	surface = pg.transform.scale(window , (width , height))
 	display.blit(surface , (0,0))
 
+# DISPLAY FPS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def display_fps():
+	pass
+
+
+
 # PLAYER CLASS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class player_class():
 	def __init__(self):
@@ -740,9 +747,36 @@ class map_class():
 				player.y += 1
 				player.camera_y = player.y - height//6
 
+		border_47 = pg.draw.rect(window,(255,0,255),(300 - player.camera_x ,182 - player.camera_y,200,165),2)
+		border_48 = pg.draw.rect(window,(255,0,255),(294 - player.camera_x ,185 - player.camera_y,204,170),2)
+
+		if player.hitbox.colliderect(border_47):
+			if player.hitbox.left < border_47.right:
+				player.x += 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.bottom > border_47.top:
+				player.y -= 1
+				player.camera_y = player.y - height//6	
+
+
+		if player.hitbox.colliderect(border_48):
+
+			if player.hitbox.right > border_48.left:
+				player.x -= 1
+				player.camera_x = player.x - width//7
+
+			if player.hitbox.top < border_48.bottom:
+				player.y += 1
+				player.camera_y = player.y - height//6
+
+
+	def collider(self):
 
 		collider_1 = pg.draw.rect(window,(255,0,0),(0 - player.camera_x ,160 - player.camera_y,125,50),2)
 		collider_2 = pg.draw.rect(window,(255,0,0),(125 - player.camera_x ,195 - player.camera_y,70,15),2)
+		collider_3 = pg.draw.rect(window,(255,0,0),(350 - player.camera_x ,380- player.camera_y,62,20),2)
+		collider_4 = pg.draw.rect(window,(255,0,0),(282 - player.camera_x ,375 - player.camera_y,64,25),2)
 
 		if not player.hitbox.colliderect(collider_1):
 			self.layer_1.set_alpha((255))
@@ -750,6 +784,11 @@ class map_class():
 		if not player.hitbox.colliderect(collider_2):
 			self.layer_1.set_alpha((255))
 
+		if not player.hitbox.colliderect(collider_3):
+			self.layer_1.set_alpha((255))
+
+		if not player.hitbox.colliderect(collider_4):
+			self.layer_1.set_alpha((255))
 
 		if player.hitbox.colliderect(collider_1):
 			self.layer_1.set_alpha((50))
@@ -757,20 +796,24 @@ class map_class():
 		if player.hitbox.colliderect(collider_2):
 			self.layer_1.set_alpha((50))
 
+		if player.hitbox.colliderect(collider_3):
+			self.layer_1.set_alpha((50))
+
+		if player.hitbox.colliderect(collider_4):
+			self.layer_1.set_alpha((50))
+
 
 		print(player.x , player.y)
 
-
 map = map_class()
 
-
 # MAINLOOP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 while loop == True:
 	player.player_mech()
 	map.city_border()
+	map.collider()
 
-	window.fill((r,g,b))
+	window.fill((30,30,30))
 	#window.blit(bg_t,(0 - player.camera_x , 0 - player.camera_y))
 	if disable_movement == False:
 		player.movement()
@@ -778,7 +821,6 @@ while loop == True:
 	map.map_layer_0()
 	player_function()
 	map.map_layer_1()
-
 
 	event_handler()
 	pg.display.flip()

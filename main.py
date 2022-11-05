@@ -37,9 +37,10 @@ def event_handler():
 # DISPLAY FPS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def display_fps():
-	pass
-
-
+	font = pg.font.Font("data/bin/font" , 18, bold = True)
+	get_fps = str(int(clock.get_fps()))
+	blit_fps = font.render(get_fps , True , (255,255,255))
+	display.blit(blit_fps , (5,5))
 
 # PLAYER CLASS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class player_class():
@@ -256,8 +257,8 @@ def player_function():
 
 class map_class():
 	def __init__(self):
-		self.layer_0 = pg.image.load("data/bin/map/city/layer_0.png")
-		self.layer_1 = pg.image.load("data/bin/map/city/layer_1.png")
+		self.layer_0 = pg.image.load("data/bin/map/city/layer_0.map")
+		self.layer_1 = pg.image.load("data/bin/map/city/layer_1.map")
 
 	def map_layer_0(self):
 		window.blit(self.layer_0,(0 - player.camera_x , 0 - player.camera_y))
@@ -802,16 +803,24 @@ class map_class():
 		if player.hitbox.colliderect(collider_4):
 			self.layer_1.set_alpha((50))
 
-
 		print(player.x , player.y)
 
 map = map_class()
 
+# NPC CLASS
+class npc_class():
+	def __init__(self):
+		self.gaza_x = 0
+		self.gaza_y = 0
+
+
+	def update_npc(self):
+		pass
+		#gaza_rect = pg.draw.rect()
+
 # MAINLOOP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 while loop == True:
-	player.player_mech()
-	map.city_border()
-	map.collider()
+
 
 	window.fill((30,30,30))
 	#window.blit(bg_t,(0 - player.camera_x , 0 - player.camera_y))
@@ -822,6 +831,12 @@ while loop == True:
 	player_function()
 	map.map_layer_1()
 
+	player.player_mech()
+	map.city_border()
+	map.collider()
+
+
 	event_handler()
+	display_fps()
 	pg.display.flip()
 	clock.tick(60)

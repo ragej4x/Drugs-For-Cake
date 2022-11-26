@@ -836,6 +836,14 @@ class npc_class():
 		self.strger_diag_4 = False
 		self.strger_diag_5 = False
 
+		# CAR VAR
+		self.car = {"car_left":False , "car_right":False , "car_up":False , "car_down":False}
+		self.cooldown = 0
+		self.spawn = False
+		self.selector = 0
+		self.car_x , self.car_y = 0,0
+
+
 	def update_npc(self):
 		jubirt_rect = pg.draw.rect(window,(0,0,200), (500 - player.camera_x ,500 - player.camera_y , 30,30))
 	
@@ -1157,8 +1165,53 @@ class npc_class():
 
 			if self.txt_animation >= 150:
 				display.blit(enter,(650,500))
+		
+
+	def cars(self):
+
+		car_rect = pg.draw.rect(window,(0,0,200),(self.car_x - player.camera_x, self.car_y - player.camera_y, 32,15))
+
+		if self.cooldown >= 100:
+			self.spawn = True
+			
+		if self.spawn == True:
+			self.selector = random.randint(0,3)
+			self.spawn = False
+			self.cooldown = 0
+
+		if self.selector == 0:
+			self.car["car_right"] = True
+			self.car["car_left"] = False
+			self.car["car_down"] = False
+			self.car["car_up"] = False
+
+		if self.selector == 1:
+			self.car["car_left"] = True
+			self.car["car_right"] = False
+			self.car["car_down"] = False
+			self.car["car_up"] = False
+		
+		if self.selector == 2:
+			self.car["car_up"] = True
+			self.car["car_right"] = False
+			self.car["car_left"] = False
+			self.car["car_down"] = False
+	
+
+		print(self.selector)
+		self.cooldown += 0.2
+
+		print(self.cooldown)
+
+
+		if self.car["car_right"] == True:
+			pass
 
 npc = npc_class()
+
+
+
+
 # MAINLOOP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 while loop == True:
 	event_handler()
@@ -1178,9 +1231,9 @@ while loop == True:
 	map.city_border()
 	map.collider()
 
+	npc.diag()
+	npc.cars()
 #DISPLAY
 	display_fps()
-	npc.diag()
-
 	pg.display.flip()
 	clock.tick(60)

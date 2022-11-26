@@ -818,6 +818,7 @@ class npc_class():
 		self.gaza_y = 0
 		self.txt_animation = 0
 		self.font = pg.font.Font("data/bin/font" , 20, bold = True)
+		self.diag_box = pg.image.load("data/bin/asset/diag_box.asset")
 		self.speed = 5
 
 		self.narr_diag_1 = False
@@ -829,7 +830,11 @@ class npc_class():
 		self.player_diag_5 = False
 		self.player_diag_6 = False
 
-		self.strger_diag_1 = True
+		self.strger_diag_1 = False
+		self.strger_diag_2 = False
+		self.strger_diag_3 = False
+		self.strger_diag_4 = False
+		self.strger_diag_5 = False
 
 	def update_npc(self):
 		jubirt_rect = pg.draw.rect(window,(0,0,200), (500 - player.camera_x ,500 - player.camera_y , 30,30))
@@ -837,22 +842,23 @@ class npc_class():
 
 	def diag(self):
 		font = pg.font.Font("data/bin/font" , 10, bold = True)
-		skip = font.render("PRESS : L_SHIFT TO SKIP.",True , (255,255,255))
-		enter = font.render("PRESS : ENTER TO CONTINUE.",True ,(255,255,255))
+		skip = font.render("PRESS : L_SHIFT TO SKIP.",True , (30,30,30))
+		enter = font.render("PRESS : ENTER TO CONTINUE.",True ,(30,30,30))
 		
 		# NARRATOR DIAG 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		if self.narr_diag_1 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+
 			narr_diag_1 = {"diag_1":"Tomorrow is Roshela's birthday and you need to buy a cake for her 16th birthday",
 			"diag_2":"but you dont have any money."}
 			
-
-			narr_diag_txt_1 = self.font.render(narr_diag_1["diag_1"][0:self.txt_animation//self.speed], True ,(255,255,255))
-
+			narr_diag_txt_1 = self.font.render(narr_diag_1["diag_1"][0:self.txt_animation//self.speed], True ,(30,30,30))
+			
 			display.blit(narr_diag_txt_1,(5,405))
 
 			if  self.txt_animation >= len(narr_diag_1["diag_1"]) + 150:
-				narr_diag_txt_1 = self.font.render(narr_diag_1["diag_2"][0:self.txt_animation//self.speed - 120], True ,(255,255,255))
+				narr_diag_txt_1 = self.font.render(narr_diag_1["diag_2"][0:self.txt_animation//self.speed - 120], True ,(30,30,30))
 				display.blit(narr_diag_txt_1,(5,435))
 				
 				if self.txt_animation >= len(narr_diag_1["diag_2"]) + 560:
@@ -872,22 +878,22 @@ class npc_class():
 			if keyinput[pg.K_RETURN] and self.txt_animation >= 10000 - 1:
 					self.narr_diag_1 = False
 					self.txt_animation = 0
-
+			
 		# DIAG 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		if self.player_diag_1 == True:
-			disable_movement = True
+			display.blit(self.diag_box,(0,height/1.6 - 5))
 
 			player_diag_1 = {"diag_1" :"Tomorrow is roshela's birthday WTF!!" , 
 			"diag_2":"I dont have any money to buy her a gift."}
 
-			player_diag_txt_1 = self.font.render(player_diag_1["diag_1"][0:self.txt_animation//self.speed], True ,(255,255,255))
+			player_diag_txt_1 = self.font.render(player_diag_1["diag_1"][0:self.txt_animation//self.speed], True ,(30,30,30))
 
 			#diag_box_1 = pg.draw.rect(display,(30,30,30),(0,400, width,200))
 			display.blit(player_diag_txt_1,(5,405))
 
 			if  self.txt_animation >= len(player_diag_1["diag_1"]) + 100:
-				player_diag_txt_1 = self.font.render(player_diag_1["diag_2"][0:self.txt_animation//self.speed - 100], True ,(255,255,255))
+				player_diag_txt_1 = self.font.render(player_diag_1["diag_2"][0:self.txt_animation//self.speed - 100], True ,(30,30,30))
 				display.blit(player_diag_txt_1,(5,435))
 
 				if self.txt_animation >= len(player_diag_1["diag_2"]) + 450:
@@ -912,8 +918,9 @@ class npc_class():
 		# DIAG 2 +++++++++++++++++++++++++++++++++++=
 
 		if self.player_diag_2 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
 			player_diag_2 = {"diag_1":"I need some money but how can i...?"}
-			diag_2 = self.font.render(player_diag_2["diag_1"][0:self.txt_animation//self.speed], True, (255,255,255))
+			diag_2 = self.font.render(player_diag_2["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
 			display.blit(diag_2,(5,405))
 
 			self.txt_animation += 1
@@ -936,8 +943,9 @@ class npc_class():
 		# DIAG 3 ++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		if self.player_diag_3 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
 			player_diag_3 = {"diag_1":"Huh who tf are you?"}
-			diag_3 = self.font.render(player_diag_3["diag_1"][0:self.txt_animation//self.speed], True, (255,255,255))
+			diag_3 = self.font.render(player_diag_3["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
 			display.blit(diag_3,(5,405))
 
 			self.txt_animation += 1
@@ -958,10 +966,11 @@ class npc_class():
 		# DIAG 4 ++++++++++++++++++++++++++++++++++++++++++++++++
 
 		if self.player_diag_4 == True:
-			player_diag_4 = {"diag_1":"Ok but how?"}
-			diag_4 = self.font.render(player_diag_4["diag_1"][0:self.txt_animation//self.speed], True, (255,255,255))
-			display.blit(diag_4,(5,405))
+			display.blit(self.diag_box,(0,height/1.6 - 5))
 
+			player_diag_4 = {"diag_1":"Ok but how?"}
+			diag_4 = self.font.render(player_diag_4["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
+			display.blit(diag_4,(5,405))
 			self.txt_animation += 1
 
 			if keyinput[pg.K_LSHIFT]:
@@ -981,8 +990,10 @@ class npc_class():
 
 
 		if self.player_diag_5 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+			
 			player_diag_5 = {"diag_1":"HUH? ARE YOU CRAZY??!!"}
-			diag_5 = self.font.render(player_diag_5["diag_1"][0:self.txt_animation//self.speed], True, (255,255,255))
+			diag_5 = self.font.render(player_diag_5["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
 			display.blit(diag_5,(5,405))
 
 			self.txt_animation += 1
@@ -1003,8 +1014,10 @@ class npc_class():
 		# DIAG 6 +++++++++++++++++++++++++++++++++++++++++++++++++
 
 		if self.player_diag_6 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+
 			player_diag_6 = {"diag_1":"Hmmm.... Ok im in."}
-			diag_6 = self.font.render(player_diag_6["diag_1"][0:self.txt_animation//self.speed], True, (255,255,255))
+			diag_6 = self.font.render(player_diag_6["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
 			display.blit(diag_6,(5,405))
 
 			self.txt_animation += 1
@@ -1023,8 +1036,127 @@ class npc_class():
 				display.blit(enter,(650,500))
 
 		# STRANGER DIAG 1 +++++++++++++++++++++++++++++++++++++++++
-			strger_diag_6 = {"diag_1":"Hmmm.... Ok im in."}
-	
+		if self.strger_diag_1 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+			strger_diag_1 = {"diag_1":"Psstt.... psstt... Hey kid you want some money?"}
+
+			diag_1 = self.font.render(strger_diag_1["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
+			display.blit(diag_1,(5,405))
+
+			self.txt_animation += 1
+
+			if keyinput[pg.K_LSHIFT]:
+				self.txt_animation = 240
+
+			if keyinput[pg.K_RETURN] and self.txt_animation >= 240 - 1:
+					self.strger_diag_1 = False
+					self.txt_animation = 0
+
+			if self.txt_animation <= 240 - 1:
+				display.blit(skip,(650,500))
+
+			if self.txt_animation >= 240:
+				display.blit(enter,(650,500))
+
+		# STRANGER DIAG 2 +++++++++++++++++++++++++++++++++++++++++
+		if self.strger_diag_2 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+			strger_diag_2 = {"diag_1":"It doesn't matter."}
+
+			diag_2 = self.font.render(strger_diag_2["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
+			display.blit(diag_2,(5,405))
+
+			self.txt_animation += 1
+
+			if keyinput[pg.K_LSHIFT]:
+				self.txt_animation = 100
+
+			if keyinput[pg.K_RETURN] and self.txt_animation >= 100 - 1:
+					self.strger_diag_6 = False
+					self.txt_animation = 0
+
+			if self.txt_animation <= 100 - 1:
+				display.blit(skip,(650,500))
+
+			if self.txt_animation >= 100:
+				display.blit(enter,(650,500))
+
+		# STRANGER DIAG 3 +++++++++++++++++++++++++++++++++++++++++
+		if self.strger_diag_3 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+			strger_diag_3 = {"diag_1":"Sell some drugs."}
+
+			diag_3 = self.font.render(strger_diag_3["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
+			display.blit(diag_3,(5,405))
+
+			self.txt_animation += 1
+
+			if keyinput[pg.K_LSHIFT]:
+				self.txt_animation = 90
+
+			if keyinput[pg.K_RETURN] and self.txt_animation >= 90 - 1:
+					self.strger_diag_3 = False
+					self.txt_animation = 0
+
+			if self.txt_animation <= 90 - 1:
+				display.blit(skip,(650,500))
+
+			if self.txt_animation >= 90:
+				display.blit(enter,(650,500))
+
+
+		# STRANGER DIAG 4 +++++++++++++++++++++++++++++++++++++++++
+		if self.strger_diag_4 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+			strger_diag_4 = {"diag_1":"No. if you ask why drugs,  drugs is expensive",
+			"diag_2":"but selling it is more profitable."}
+
+			diag_4 = self.font.render(strger_diag_4["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
+			display.blit(diag_4,(5,405))
+
+			if self.txt_animation >= len(strger_diag_4) + 200:
+				diag_4 = self.font.render(strger_diag_4["diag_2"][0:self.txt_animation//self.speed - 80], True, (30,30,30))
+				display.blit(diag_4,(5,435))
+				if self.txt_animation >= len(strger_diag_4["diag_2"]) + 360:
+					self.txt_animation = 10000
+
+			self.txt_animation += 1
+
+			if keyinput[pg.K_LSHIFT]:
+				self.txt_animation = 10000
+
+			if keyinput[pg.K_RETURN] and self.txt_animation >= 400 - 1:
+					self.strger_diag_4 = False
+					self.txt_animation = 0
+
+			if self.txt_animation <= 400 - 1:
+				display.blit(skip,(650,500))
+
+			if self.txt_animation >= 400:
+				display.blit(enter,(650,500))
+
+		# STRANGER DIAG 5 +++++++++++++++++++++++++++++++++++++++++
+		if self.strger_diag_5 == True:
+			display.blit(self.diag_box,(0,height/1.6 - 5))
+			strger_diag_5 = {"diag_1":"Now go on kid make some money."}
+
+			diag_5 = self.font.render(strger_diag_5["diag_1"][0:self.txt_animation//self.speed], True, (30,30,30))
+			display.blit(diag_5,(5,405))
+
+			self.txt_animation += 1
+
+			if keyinput[pg.K_LSHIFT]:
+				self.txt_animation = 10000
+
+			if keyinput[pg.K_RETURN] and self.txt_animation >= 150 - 1:
+					self.strger_diag_5 = False
+					self.txt_animation = 0
+
+			if self.txt_animation <= 150 - 1:
+				display.blit(skip,(650,500))
+
+			if self.txt_animation >= 150:
+				display.blit(enter,(650,500))
 
 npc = npc_class()
 # MAINLOOP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

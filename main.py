@@ -8,9 +8,10 @@ icon = pg.image.load("data/bin/icon.png")
 pg.display.set_icon(icon)
 window = pg.Surface((width//3 , height//3))
 clock = pg.time.Clock()
-
 bg_t = pg.image.load("data/bin/trans.png")
+
 pg.init()
+
 
 # VARIABLES ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 loop = True
@@ -26,13 +27,17 @@ r , g , b = 0,0,0
 
 def event_handler():
 	global loop
-
+	global mouse
 	for event in pg.event.get():
 		if event.type == pg.QUIT:
 			loop = False
 
+	mx , my = pg.mouse.get_pos()
+
+
 	surface = pg.transform.scale(window , (width , height))
 	display.blit(surface , (0,0))
+	mouse = pg.draw.rect(display, (255,255,255), (mx , my , 3,3))
 
 # DISPLAY FPS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -803,7 +808,6 @@ class map_class():
 		if player.hitbox.colliderect(collider_4):
 			self.layer_1.set_alpha((50))
 
-		print(player.x , player.y)
 
 map = map_class()
 
@@ -812,14 +816,90 @@ class npc_class():
 	def __init__(self):
 		self.gaza_x = 0
 		self.gaza_y = 0
+		self.txt_animation = 0
+		self.font = pg.font.Font("data/bin/font" , 20, bold = True)
+		self.speed = 5
 
+		self.player_diag_1 = False
+		self.player_diag_2 = True
 
 	def update_npc(self):
-		pass
-		#gaza_rect = pg.draw.rect()
+		jubirt_rect = pg.draw.rect(window,(0,0,200), (500 - player.camera_x ,500 - player.camera_y , 30,30))
+	
 
+	def diag(self):
+		font = pg.font.Font("data/bin/font" , 10, bold = True)
+		skip = font.render("PRESS : L_SHIFT TO SKIP.",True , (255,255,255))
+		enter = font.render("PRESS : ENTER TO CONTINUE.",True ,(255,255,255))
+
+		# DIAG 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		if self.player_diag_1 == True:
+			disable_movement = True
+
+			player_diag_1 = {"diag_1" :"Tomorrow  is  roshela's  birthday  WTF!!" , 
+			"diag_2":"I  dont  have  any  money  to  buy  her  a  gift."}
+
+			player_diag_txt_1 = self.font.render(player_diag_1["diag_1"][0:self.txt_animation//self.speed], True ,(255,255,255))
+
+			#diag_box_1 = pg.draw.rect(display,(30,30,30),(0,400, width,200))
+			display.blit(player_diag_txt_1,(5,405))
+
+			if  self.txt_animation >= len(player_diag_1["diag_1"]) + 100:
+				player_diag_txt_1 = self.font.render(player_diag_1["diag_2"][0:self.txt_animation//self.speed - 100], True ,(255,255,255))
+				display.blit(player_diag_txt_1,(5,435))
+
+				if self.txt_animation >= len(player_diag_1["diag_2"]) + 450:
+					self.txt_animation = 10000
+
+			self.txt_animation += 1
+
+			if self.txt_animation <= 10000:
+				display.blit(skip,(650,500))
+
+			if self.txt_animation >= 10000:
+				display.blit(enter,(650,500))
+
+			if keyinput[pg.K_LSHIFT]:
+				self.txt_animation = 10000
+
+			if keyinput[pg.K_RETURN] and self.txt_animation >= 10000 - 1:
+					self.player_diag_1 = False
+					self.txt_animation = 0
+
+		# DIAG 2 +++++++++++++++++++++++++++++++++++=
+
+		if self.player_diag_2 == True:
+			player_diag_2 = {"diag_1":"I need some money but how can i...?"}
+			diag_2 = self.font.render(player_diag_2["diag_1"][0:self.txt_animation//self.speed], True, (255,255,255))
+			display.blit(diag_2,(5,405))
+
+			self.txt_animation += 1
+
+			if keyinput[pg.K_LSHIFT]:
+				self.txt_animation = 500
+
+			if keyinput[pg.K_RETURN] and self.txt_animation >= 200 - 1:
+					self.player_diag_2 = False
+					self.txt_animation = 0
+
+			if self.txt_animation <= 200:
+				display.blit(skip,(650,500))
+
+			if self.txt_animation >= 200:
+				display.blit(enter,(650,500))
+
+			#diag_box_1 = pg.draw.rect(display,(30,30,30),(0,400, width,200))
+
+
+
+
+
+
+npc = npc_class()
 # MAINLOOP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 while loop == True:
+	event_handler()
 
 
 	window.fill((30,30,30))
@@ -830,13 +910,16 @@ while loop == True:
 	map.map_layer_0()
 	player_function()
 	map.map_layer_1()
-
+	
+	npc.update_npc()
 	player.player_mech()
 	map.city_border()
 	map.collider()
 
 
-	event_handler()
+#DISPLAY
 	display_fps()
+	npc.diag()
+
 	pg.display.flip()
 	clock.tick(60)

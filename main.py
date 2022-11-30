@@ -50,8 +50,8 @@ def display_fps():
 # PLAYER CLASS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class player_class():
 	def __init__(self):
-		self.x = 1
-		self.y = 20
+		self.x = 150
+		self.y = 300
 		self.speed = 1
 
 		self.right = False
@@ -835,17 +835,23 @@ class npc_class():
 		self.strger_diag_5 = False
 
 		# CAR VAR
-		self.car = {"car_left":False , "car_right":False , "car_up":False , "car_down":False}
+		self.car = {"car_left":False, "left_car_x":500, 
+		"car_right":False , 
+		"car_up":False , 
+		"car_down":False}
+
+
 		self.cooldown = 0
 		self.spawn = False
-		self.selector = random.randint(0,3)
+		self.selector = 1
 		self.car_x , self.car_y = 0,0
 
-
-
+		self.jubirt_x , self.jubirt_y = 70,275
+	# UPDATE NPC ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	def update_npc(self):
-		jubirt_rect = pg.draw.rect(window,(0,0,200), (500 - player.camera_x ,500 - player.camera_y , 30,30))
-	
+		jubirt_rect = pg.draw.rect(window,(0,0,200), (self.jubirt_x - player.camera_x ,self.jubirt_y - player.camera_y , 20,30))
+
+
 
 	def diag(self):
 		font = pg.font.Font("data/bin/font" , 10, bold = True)
@@ -1193,7 +1199,8 @@ class npc_class():
 			self.car["car_right"] = False
 			self.car["car_down"] = False
 			self.car["car_up"] = False
-		
+
+
 		if self.selector == 2:
 			self.car["car_up"] = True
 			self.car["car_right"] = False
@@ -1204,13 +1211,13 @@ class npc_class():
 		if self.car["car_right"] == True:
 			self.car_x += 3
 			self.car_y = 85
-			self.car_x = 0
+			#self.car_x = 0
 
 
 		if self.car["car_left"] == True:
+			self.car_x = self.car["left_car_x"]
 			self.car_x -= 3
 			self.car_y = 120
-			self.car_x -= 500
 
 
 
@@ -1222,21 +1229,16 @@ class npc_class():
 
 		if self.car["car_down"] == True:
 			self.car_y += 3
-			self.car_y = 0
 			self.car_x = 205
-			self.car_x += 3
-
 
 
 		#print(self.selector)
-		self.cooldown += 0.2
+		#self.cooldown += 0.2
 
 		if self.cooldown >= 100:
 			self.spawn = True
 
 npc = npc_class()
-
-
 
 
 # MAINLOOP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1257,7 +1259,9 @@ while loop == True:
 	player.player_mech()
 	map.city_border()
 	map.collider()
+	#npc.cars()
 	npc.diag()
+
 #DISPLAY
 	display_fps()
 	pg.display.flip()

@@ -1201,14 +1201,6 @@ class npc_class():
 			self.car["car_down"] = False
 	
 
-		print(self.selector)
-		self.cooldown += 0.2
-
-		if self.cooldown >= 100:
-			self.spawn = True
-
-		print(self.cooldown)
-
 		if self.car["car_right"] == True:
 			self.car_x += 3
 			self.car_y = 85
@@ -1235,6 +1227,13 @@ class npc_class():
 			self.car_x += 3
 
 
+
+		#print(self.selector)
+		self.cooldown += 0.2
+
+		if self.cooldown >= 100:
+			self.spawn = True
+
 npc = npc_class()
 
 
@@ -1258,9 +1257,7 @@ while loop == True:
 	player.player_mech()
 	map.city_border()
 	map.collider()
-
 	npc.diag()
-	npc.cars()
 #DISPLAY
 	display_fps()
 	pg.display.flip()

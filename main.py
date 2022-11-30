@@ -850,7 +850,10 @@ class npc_class():
 	# UPDATE NPC ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	def update_npc(self):
 		jubirt_rect = pg.draw.rect(window,(0,0,200), (self.jubirt_x - player.camera_x ,self.jubirt_y - player.camera_y , 20,30))
-
+		
+		
+		if player.hitbox.colliderect(jubirt_rect):
+			pass
 
 
 	def diag(self):

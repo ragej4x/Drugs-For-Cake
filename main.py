@@ -50,8 +50,8 @@ def display_fps():
 # PLAYER CLASS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class player_class():
 	def __init__(self):
-		self.x = 481
-		self.y = 400
+		self.x = 1
+		self.y = 20
 		self.speed = 1
 
 		self.right = False
@@ -814,8 +814,6 @@ map = map_class()
 # NPC CLASS
 class npc_class():
 	def __init__(self):
-		self.gaza_x = 0
-		self.gaza_y = 0
 		self.txt_animation = 0
 		self.font = pg.font.Font("data/bin/font" , 20, bold = True)
 		self.diag_box = pg.image.load("data/bin/asset/diag_box.asset")
@@ -840,8 +838,9 @@ class npc_class():
 		self.car = {"car_left":False , "car_right":False , "car_up":False , "car_down":False}
 		self.cooldown = 0
 		self.spawn = False
-		self.selector = 0
+		self.selector = random.randint(0,3)
 		self.car_x , self.car_y = 0,0
+
 
 
 	def update_npc(self):
@@ -1114,6 +1113,7 @@ class npc_class():
 
 
 		# STRANGER DIAG 4 +++++++++++++++++++++++++++++++++++++++++
+
 		if self.strger_diag_4 == True:
 			display.blit(self.diag_box,(0,height/1.6 - 5))
 			strger_diag_4 = {"diag_1":"No. if you ask why drugs,  drugs is expensive",
@@ -1166,13 +1166,16 @@ class npc_class():
 			if self.txt_animation >= 150:
 				display.blit(enter,(650,500))
 		
-
+# CARSSS!!!!!!!!!!
 	def cars(self):
+		
+		if self.selector == 0 or self.selector == 1:
+			car_rect_lr = pg.draw.rect(window,(0,0,200),(self.car_x - player.camera_x, self.car_y - player.camera_y, 32,15))
+		
+		if self.selector == 2 or self.selector == 3:
+			car_rect_ud = pg.draw.rect(window,(0,0,200),(self.car_x - player.camera_x, self.car_y - player.camera_y, 15,32))
 
-		car_rect = pg.draw.rect(window,(0,0,200),(self.car_x - player.camera_x, self.car_y - player.camera_y, 32,15))
-
-		if self.cooldown >= 100:
-			self.spawn = True
+	
 			
 		if self.spawn == True:
 			self.selector = random.randint(0,3)
@@ -1201,11 +1204,36 @@ class npc_class():
 		print(self.selector)
 		self.cooldown += 0.2
 
+		if self.cooldown >= 100:
+			self.spawn = True
+
 		print(self.cooldown)
 
-
 		if self.car["car_right"] == True:
-			pass
+			self.car_x += 3
+			self.car_y = 85
+			self.car_x = 0
+
+
+		if self.car["car_left"] == True:
+			self.car_x -= 3
+			self.car_y = 120
+			self.car_x -= 500
+
+
+
+		if self.car["car_up"] == True:
+			self.car_y -= 3
+			self.car_y = 500
+			self.car_x = 205
+			
+
+		if self.car["car_down"] == True:
+			self.car_y += 3
+			self.car_y = 0
+			self.car_x = 205
+			self.car_x += 3
+
 
 npc = npc_class()
 

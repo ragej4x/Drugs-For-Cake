@@ -851,10 +851,9 @@ class npc_class():
 	def update_npc(self):
 		jubirt_rect = pg.draw.rect(window,(0,0,200), (self.jubirt_x - player.camera_x ,self.jubirt_y - player.camera_y , 20,30))
 		
-		
-		if player.hitbox.colliderect(jubirt_rect):
-			pass
 
+		if player.hitbox.colliderect(jubirt_rect) and keyinput[pg.K_RETURN]:
+			self.strger_diag_1 = True
 
 	def diag(self):
 		font = pg.font.Font("data/bin/font" , 10, bold = True)

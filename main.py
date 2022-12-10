@@ -12,7 +12,6 @@ bg_t = pg.image.load("data/bin/trans.png")
 
 pg.init()
 
-
 # VARIABLES ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 loop = True
 disable_movement = False
@@ -33,7 +32,6 @@ def event_handler():
 			loop = False
 
 	mx , my = pg.mouse.get_pos()
-
 
 	surface = pg.transform.scale(window , (width , height))
 	display.blit(surface , (0,0))
